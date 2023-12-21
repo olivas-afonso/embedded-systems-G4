@@ -1,0 +1,52 @@
+10.2.1.28 ROM_GPIOPinWrite
+Writes a value to the specified pin(s).
+Prototype:
+void
+ROM_GPIOPinWrite(uint32_t ui32Port,
+uint8_t ui8Pins,
+uint8_t ui8Val)
+
+ROM Location:
+ROM_APITABLE is an array of pointers located at 0x0100.0010.
+ROM_GPIOTABLE is an array of pointers located at ROM_APITABLE[4].
+ROM_GPIOPinWrite is a function pointer located at ROM_GPIOTABLE[0].
+Parameters:
+ui32Port is the base address of the GPIO port.
+ui8Pins is the bit-packed representation of the pin(s).
+ui8Val is the value to write to the pin(s).
+Description:
+Writes the corresponding bit values to the output pin(s) specified by ui8Pins. Writing to a pin
+configured as an input pin has no effect.
+The pin(s) are specified using a bit-packed byte, where each bit that is set identifies the pin to
+be accessed, and where bit 0 of the byte represents GPIO port pin 0, bit 1 represents GPIO
+port pin 1, and so on.
+Returns:
+None.
+
+
+15.2.1.18 ROM_PWMGenPeriodSet
+Set the period of a PWM generator.
+Prototype:
+void
+ROM_PWMGenPeriodSet(uint32_t ui32Base,
+uint32_t ui32Gen,
+uint32_t ui32Period)
+ROM Location:
+ROM_APITABLE is an array of pointers located at 0x0100.0010.
+ROM_PWMTABLE is an array of pointers located at ROM_APITABLE[8].
+ROM_PWMGenPeriodSet is a function pointer located at ROM_PWMTABLE[2].
+Parameters:
+ui32Base is the base address of the PWM module.
+ui32Gen is the PWM generator to be modified. Must be one of PWM_GEN_0, PWM_GEN_1,
+PWM_GEN_2, or PWM_GEN_3.
+ui32Period specifies the period of PWM generator output, measured in clock ticks.
+Description:
+This function sets the period of the specified PWM generator block, where the period of the
+generator block is defined as the number of PWM clock ticks between pulses on the generator
+block zero signal.
+Note:
+Any subsequent calls made to this function before an update occurs will cause the previous
+values to be overwritten.
+Returns:
+None
+
