@@ -22,9 +22,10 @@
 //
 //*****************************************************************************
 
+#include "ccs/LCD.h"
 #include <stdint.h>
 #include <stdbool.h>
-#include "inc/hw_ints.h"   //hw ints and lcd library have a collision and dont work together
+//#include "inc/hw_ints.h"   //hw ints and lcd library have a collision and dont work together
 #include "inc/hw_memmap.h"
 #include "inc/hw_types.h"  //
 #include "driverlib/debug.h"
@@ -37,7 +38,6 @@
 #include "driverlib/timer.h"
 #include "driverlib/uart.h"
 #include "utils/uartstdio.h"
-#include "ccs/LCD.h"
 
 #ifdef DEBUG
 void
@@ -69,15 +69,16 @@ __error__(char *pcFilename, uint32_t ui32Line)
 #define GREEN_LED GPIO_PIN_3
 
 int var;
-int letter;
 uint32_t g_ui32SysClock;
 char charBuffer[128];
 uint8_t *charHolder;
-
+char test[] = "IM ALIVE";
+char test2[] = "G";
 
 char keyboard (void)
 
 {
+
     char key[4][4] =
     {
         {'1', '2', '3', 'F'},
@@ -86,9 +87,10 @@ char keyboard (void)
         {'A', '0', 'B', 'C'}
     };                           //define the keyboard layout
     int j,i;
+    char letter;
     char row[] = {GPIO_PIN_3, GPIO_PIN_4, GPIO_PIN_5, GPIO_PIN_6};    //define the pins for the rows
     char line[] = {GPIO_PIN_6, GPIO_PIN_3, GPIO_PIN_2, GPIO_PIN_1};     //define the pins for the lines
-    
+    letter = ' ';
     for (i = 0; i < 4; i++)
     {
         GPIOPinWrite(GPIO_PORTB_BASE, row[i], row[i]); //set pin in the rows to high and check all combinations
@@ -103,6 +105,27 @@ char keyboard (void)
 
     }
     return letter;
+}
+
+
+void IntGPIOd(void)
+{
+    GPIOIntDisable(GPIO_PORTD_BASE, GPIO_INT_PIN_6 | GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3);
+    GPIOIntClear(GPIO_PORTD_BASE, GPIO_INT_PIN_6 | GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3 );
+
+    GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6, ~(GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6)); //set B pins to low
+    SysCtlDelay(5);
+
+
+    GPIOPinWrite(GPIO_PORTF_BASE, RED_LED|BLUE_LED|GREEN_LED, GREEN_LED); // Turn on the LED
+
+    test2[0] = keyboard();
+    Lcd_Write_String(test2);
+    GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6, (GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6)); //set B pins to low
+    SysCtlDelay(10);
+
+    GPIOIntEnable(GPIO_PORTD_BASE, GPIO_INT_PIN_6 | GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3);
+
 }
 
 //*****************************************************************************
@@ -126,17 +149,25 @@ main(void)
        {
        }
 
-       GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
+       GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);       //sets pins as outputs for the screen todo interleaving for bit setting
+
        GPIOPinTypeGPIOOutput(GPIO_PORTC_BASE, GPIO_PIN_6 | GPIO_PIN_7);    //sets pins as outputs for the screen
+
        GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6);    //sets pins as outputs for the keyboard
-       GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, RED_LED|BLUE_LED|GREEN_LED);   // Configure the GPIO port for the LED operation.
+       GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 ); //set B pins to high
 
        GPIOPinTypeGPIOInput(GPIO_PORTD_BASE , GPIO_PIN_6 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);   //sets pins D6, D3, D2, D1 as inputs for the keyboard
+       GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE, RED_LED|BLUE_LED|GREEN_LED);   // Configure the GPIO port for the LED operation.
 
-       GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_6 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, 0x000); //set B pins to low
+       GPIOIntRegister(GPIO_PORTD_BASE, IntGPIOd);
+       GPIOIntEnable(GPIO_PORTD_BASE, GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3 | GPIO_INT_PIN_6 );      /*    Configures the Red LED, GPIO_PIN_1, to output  */
+       GPIOIntTypeSet(GPIO_PORTD_BASE, GPIO_PIN_6 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_RISING_EDGE); //set the interrupt on pins 1 2 3 6 for rising edge
 
-       char test[] = "IM ALIVE";
-       char test2[] = "GG";
+       IntMasterEnable();
+
+
+
+
 
        Lcd_Init();
        SysCtlDelay(2000000);
@@ -144,26 +175,24 @@ main(void)
        SysCtlDelay(2000000);
        Lcd_Write_String(test);
 
-
-
     SysCtlDelay(200000);
+    GPIOPinWrite(GPIO_PORTF_BASE, RED_LED|BLUE_LED|GREEN_LED, RED_LED); // Turn on the LED
+
+
 
     while(1)
     {
 
-        GPIOPinWrite(GPIO_PORTF_BASE, RED_LED|BLUE_LED|GREEN_LED, RED_LED); // Turn on the LED
 
-        SysCtlDelay(2000000);
-        test2[0] = keyboard();
-        Lcd_Write_String(test2);
+/*
+        //test2[0] = keyboard();
+        //Lcd_Write_String(test2);
+        //GPIOPinWrite(GPIO_PORTF_BASE, RED_LED|BLUE_LED|GREEN_LED, BLUE_LED); // Turn on the LED
 
-        GPIOPinWrite(GPIO_PORTF_BASE, RED_LED|BLUE_LED|GREEN_LED, BLUE_LED); // Turn on the LED
-
-        SysCtlDelay(2000000);
-        SysCtlDelay(8000000);
+        SysCtlDelay(10000000);
         Lcd_Clear();
-        SysCtlDelay(2000000);
-
+        SysCtlDelay(4000000);
+*/
     }
 }
 
