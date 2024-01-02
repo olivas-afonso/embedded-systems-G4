@@ -22,7 +22,6 @@
 //
 //*****************************************************************************
 
-#include "ccs/LCD.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include "inc/hw_ints.h"   //hw ints and lcd library have a collision and dont work together
@@ -47,14 +46,8 @@ __error__(char *pcFilename, uint32_t ui32Line)
 #endif
 
 volatile uint8_t check_keyboard=0; //its 1 if there is a pending read to be done of the keyboard
-int var;
-uint32_t g_ui32SysClock;
-char charBuffer[128];
-uint8_t *charHolder;
-char test[] = "IM ALIVE";
-char test2[] = "G";
 
-char keyboard (void)   //goes trough all the lines and rows and returns the last key that was high
+char keyboard (void)   //goes trough all the lines and rows and returns the last key that was high, also sets the interrupts for the keyboard
 
 {
 
@@ -75,6 +68,7 @@ char keyboard (void)   //goes trough all the lines and rows and returns the last
     for (i = 0; i < 4; i++)
     {
         GPIOPinWrite(GPIO_PORTB_BASE, row[i], row[i]); //set pin in the rows to high and check all combinations
+        SysCtlDelay(5);
         for (j = 0; j < 4; j++) 
         {
             if (GPIOPinRead(GPIO_PORTD_BASE , line[j]) == line[j])  //check pins in the line, if the pin is high, return value of the key
@@ -83,7 +77,6 @@ char keyboard (void)   //goes trough all the lines and rows and returns the last
                 }
         }    
         GPIOPinWrite(GPIO_PORTB_BASE, row[i], ~row[i]); //set pin to low
-
     }
     GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6, (GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6)); //set B pins to high
     SysCtlDelay(5);
@@ -92,11 +85,10 @@ char keyboard (void)   //goes trough all the lines and rows and returns the last
 
     return letter;
 
-
 }
 
 
-void IntGPIOd(void)
+void IntGPIOd(void)  //Disables GPIO interrupts, clears the flag, and sets the timer to be run, after which the key is read
 {
     GPIOIntDisable(GPIO_PORTD_BASE, GPIO_INT_PIN_6 | GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3);  //disable interrupt
 
@@ -108,13 +100,12 @@ void IntGPIOd(void)
 
 
 void
-Timer0IntHandler(void)
+Timer0IntHandler(void)    //Timer intterupt, clears the flag and sets check keyboard to 1 to be checked in the main function
 {
     TimerIntClear(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
 
-    check_keyboard=1;
+    check_keyboard = 1;
 }
-
 
 //*****************************************************************************
 //
@@ -123,63 +114,35 @@ Timer0IntHandler(void)
 //screen pins :input  X1:PD6   X2:PD3  X3:PD2   X4:PD1 output  Y1:PB3   Y2:PB4   Y3:PB5   Y4:PB6
 //
 //*****************************************************************************
-
-
-
 int
 main(void)
 {
 
        SysCtlClockSet(SYSCTL_SYSDIV_4|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);  //set the clock to 50 mhz
        SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);
-       SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOC);  //screeen to be deleted #todo
        SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
-       SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);  //screeen to be deleted #todo
-
-
-       ////////////////////////////////////
-       GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);       //sets pins as outputs for the screen todo interleaving for bit setting
-       GPIOPinTypeGPIOOutput(GPIO_PORTC_BASE, GPIO_PIN_6 | GPIO_PIN_7);    //sets pins as outputs for the screen
-       ////////////////////////////////////// screen stuff to be deleted #todo
 
        GPIOPinTypeGPIOOutput(GPIO_PORTB_BASE, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6);    //sets pins as outputs for the keyboard
        GPIOPinWrite(GPIO_PORTB_BASE, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6, GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6 ); //set B pins to high
-
        GPIOPinTypeGPIOInput(GPIO_PORTD_BASE , GPIO_PIN_6 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);   //sets pins D6, D3, D2, D1 as inputs for the keyboard
-
        GPIOIntRegister(GPIO_PORTD_BASE, IntGPIOd);  // binds portd interrupts to IntGPIOd functuion
        GPIOIntEnable(GPIO_PORTD_BASE, GPIO_INT_PIN_1 | GPIO_INT_PIN_2 | GPIO_INT_PIN_3 | GPIO_INT_PIN_6 );      /*    sets pins 1 2 3 5 of portd for interrupts  */
        GPIOIntTypeSet(GPIO_PORTD_BASE, GPIO_PIN_6 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3, GPIO_RISING_EDGE);    //set the interrupt on pins 1 2 3 6 for rising edge
 
-
-
        SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER0);    //timer setup
-       TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT);
-       TimerLoadSet(TIMER0_BASE, TIMER_A, SysCtlClockGet()/50);
+       TimerConfigure(TIMER0_BASE, TIMER_CFG_ONE_SHOT);  //timer runs only once
+       TimerLoadSet(TIMER0_BASE, TIMER_A, SysCtlClockGet()/20);  //sets timer to 1/20 of a second
        TimerIntRegister(TIMER0_BASE, TIMER_A, Timer0IntHandler);  // binds timer interrupts to Timer0IntHandler function
        IntEnable(INT_TIMER0A);
        TimerIntEnable(TIMER0_BASE, TIMER_TIMA_TIMEOUT);
 
-
        IntMasterEnable();
-
-       Lcd_Init();
-       SysCtlDelay(2000000);
-       Lcd_Clear();
-       SysCtlDelay(2000000);
-       Lcd_Write_String(test);   //#TODO TO BE DELETED
-
-    SysCtlDelay(200000);
-    Lcd_Clear();
-
-
 
     while(1)
     {
-        if (check_keyboard == 1)  //check pins in the line, if the pin is high, return value of the key
+        if (check_keyboard == 1)  //of the check keyboard is one, there is key waiting to be pressed
             {
-            test2[0] = keyboard();
-            Lcd_Write_String(test2);
+
             check_keyboard = 0;
 
             }
