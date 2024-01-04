@@ -1,0 +1,35 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdbool.h>
+
+char uart[] = "PQ: 1900, 34,181,317,523,104,309 ; 40,-71,6";
+char packet_number[] = "66666";
+char light_sensor[] = "666";
+char CPU_temp[] = "666";
+char body_temp[] = "666";
+char humidity[] = "666";
+char acceleration[] = "666";
+char pressure[] = "666";
+
+
+int main() {
+    // Write C code here
+    printf(uart);
+    strncpy(packet_number, uart + 3, 5); // Copies 5 characters starting from index 5, so only the packet number
+    strncpy(light_sensor, uart + 9, 3); // Copies 9 characters starting from index 5, so only the light sensor    
+    strncpy(CPU_temp, uart + 13, 3); // Copies 5 characters starting from index 5, so only the CPU_temp    
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the body temperature    
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the humidity   
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the packet number    
+
+    printf("\n%s\n","wazaaaap");
+    printf(packet_number);
+    printf("\n");
+    printf(light_sensor);
+    printf("\n");
+    printf(CPU_temp);
+        printf("\n");
+    printf(body_temp);
+    
+    return 0;
+}
