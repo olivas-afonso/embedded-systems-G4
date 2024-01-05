@@ -1,0 +1,134 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+char uart[] = "PQ: 1900, 34,181,317,523,104,309 ; 40,-71,6";
+char packet_number[] = "66666";
+char light_sensor[] = "666";
+char CPU_temp[] = "666";
+char body_temp[] = "666";
+char humidity[] = "666";
+char acceleration[] = "666";
+char pressure[] = "666";
+
+
+
+
+int main() 
+{
+    // Write C code here
+    printf(uart);
+    strncpy(packet_number, uart + 3, 5); // Copies 5 characters starting from index 5, so only the packet number
+    strncpy(light_sensor, uart + 9, 3); // Copies 9 characters starting from index 5, so only the light sensor    
+    strncpy(CPU_temp, uart + 13, 3); // Copies 5 characters starting from index 5, so only the CPU_temp    
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the body temperature    
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the humidity   
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the packet number    
+
+    printf("\n%s\n","wazaaaap");
+    printf(packet_number);
+    printf("\n");
+    printf(light_sensor);
+    printf("\n");
+    printf(CPU_temp);
+    printf("\n");
+    printf(body_temp);
+    printf("\n");
+    
+    char semicolon = ';';
+    char *position_ptr = strchr(uart, semicolon);
+    int position = position_ptr - uart;
+    printf("%c", uart[position]);
+    return 0;
+}
+
+
+    char *position_ptr = strchr(uart, ';');  //finds the position of the first semicolon
+
+
+
+    char *position_ptr = strchr(uart, ';');  //finds the adress of the first semicolon
+    int position = position_ptr - uart ;   //calculates the position of the first semicolon
+    strncpy(uart_end, uart + position + 5 , 11);  //copies the stuff after semicolon in another string
+    
+    char *position_ptr2 = strchr(uart_end, ',');  //finds the adress of the first colon
+    int position2 = position_ptr2 - uart_end ;   //calculates the position of the first semicolon
+    char RSSI[position2];
+    strncpy(RSSI,uart_end, position2);
+    
+    char *position_ptr3 = strchr(uart_end, '\0');  //finds the adress of the first colon
+    int position3 = position_ptr3 - uart_end ;   //calculates the position of the first semicolon
+    char SNR[position3 - position2];
+    strncpy(SNR,uart_end + position2 +1, position3 - position2);
+    
+	
+	
+	
+	
+	// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+char uart[] = "PQ: 1900, 34,181,317,523,104,309 ; 40,-71,6";
+char packet_number[] = "66666";
+char light_sensor[] = "666";
+char CPU_temp[] = "666";
+char body_temp[] = "666";
+char humidity[] = "666";
+char acceleration[] = "666";
+char pressure[] = "666";
+char uart_end[11];
+
+
+
+
+int main() {
+    // Write C code here
+    printf(uart);
+    strncpy(packet_number, uart + 3, 5); // Copies 5 characters starting from index 5, so only the packet number
+    strncpy(light_sensor, uart + 9, 3); // Copies 9 characters starting from index 5, so only the light sensor    
+    strncpy(CPU_temp, uart + 13, 3); // Copies 5 characters starting from index 5, so only the CPU_temp    
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the body temperature    
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the humidity   
+    strncpy(body_temp, uart + 17, 3); // Copies 5 characters starting from index 5, so only the packet number    
+/*
+    printf("\n%s\n","wazaaaap");
+    printf(packet_number);
+    printf("\n");
+    printf(light_sensor);
+    printf("\n");
+    printf(CPU_temp);
+    printf("\n");
+    printf(body_temp);
+    printf("\n");
+   */
+    printf("\n");
+
+    char *position_ptr = strchr(uart, ';');  //finds the adress of the first semicolon
+    int position = position_ptr - uart ;   //calculates the position of the first semicolon
+    strncpy(uart_end, uart + position + 5 , 11);  //copies the stuff after semicolon in another string
+    
+    char *position_ptr2 = strchr(uart_end, ',');  //finds the adress of the first colon
+    int position2 = position_ptr2 - uart_end ;   //calculates the position of the first semicolon
+    char RSSI[position2];
+    strncpy(RSSI,uart_end, position2);
+    
+    char *position_ptr3 = strchr(uart_end, '\0');  //finds the adress of the first colon
+    int position3 = position_ptr3 - uart_end ;   //calculates the position of the first semicolon
+    char SNR[position3 - position2];
+    strncpy(SNR,uart_end + position2 +1, position3 - position2);
+    
+    printf(SNR);
+    printf("\n");
+
+
+    printf(RSSI);
+    printf("\n");
+    printf(uart_end);
+    printf("\n");
+    return 0;
+}
+	
+	
