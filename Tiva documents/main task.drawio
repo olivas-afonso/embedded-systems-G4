@@ -1,0 +1,95 @@
+<mxfile host="app.diagrams.net" modified="2024-01-07T20:47:57.060Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="Ff4pZJ2AE-wnIU62zVNo" version="22.1.17" type="device">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="1050" dy="530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-0" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="47" y="10" width="663" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GrddJe5-Kh9dzOj8jO4C-5" target="GrddJe5-Kh9dzOj8jO4C-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-2" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;" vertex="1" connectable="0" parent="GrddJe5-Kh9dzOj8jO4C-1">
+          <mxGeometry x="-0.168" y="4" relative="1" as="geometry">
+            <mxPoint x="6" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GrddJe5-Kh9dzOj8jO4C-5" target="GrddJe5-Kh9dzOj8jO4C-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="140" />
+              <mxPoint x="310" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-4" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;" vertex="1" connectable="0" parent="GrddJe5-Kh9dzOj8jO4C-3">
+          <mxGeometry x="-0.3067" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-5" value="Is cold start &lt;br&gt;flag set?" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="140" y="100" width="100" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GrddJe5-Kh9dzOj8jO4C-8" target="GrddJe5-Kh9dzOj8jO4C-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-8" value="Wait for time &lt;br&gt;and date input" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="130" y="230" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-9" value="Menu Task" style="shape=partialRectangle;whiteSpace=wrap;html=1;left=0;right=0;fillColor=default;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="318.5" y="40" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GrddJe5-Kh9dzOj8jO4C-11" target="GrddJe5-Kh9dzOj8jO4C-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="190" y="400" />
+              <mxPoint x="100" y="400" />
+              <mxPoint x="100" y="140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-11" value="Send date and time to buffer and unset the cold start flag" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="125" y="320" width="130" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GrddJe5-Kh9dzOj8jO4C-17" target="GrddJe5-Kh9dzOj8jO4C-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-17" value="Wait for keypress" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="318.5" y="115" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GrddJe5-Kh9dzOj8jO4C-22" target="GrddJe5-Kh9dzOj8jO4C-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-22" value="Stop LCD from printing and retreive command" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="520" y="115" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GrddJe5-Kh9dzOj8jO4C-26" target="GrddJe5-Kh9dzOj8jO4C-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-30" value="Buzzer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;" vertex="1" connectable="0" parent="GrddJe5-Kh9dzOj8jO4C-29">
+          <mxGeometry x="-0.1289" y="2" relative="1" as="geometry">
+            <mxPoint x="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-36" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="GrddJe5-Kh9dzOj8jO4C-26" target="GrddJe5-Kh9dzOj8jO4C-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-37" value="Buffer" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=none;" vertex="1" connectable="0" parent="GrddJe5-Kh9dzOj8jO4C-36">
+          <mxGeometry x="-0.1895" y="2" relative="1" as="geometry">
+            <mxPoint y="-17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-26" value="Is command for buzzer or for buffer" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="515" y="195" width="130" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-28" value="Toggle the state of the buzzer" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="520" y="360" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="GrddJe5-Kh9dzOj8jO4C-32" value="Write to &lt;br&gt;buffer queue" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.multi-document;whiteSpace=wrap;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="329.25" y="222.5" width="98.5" height="65" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
